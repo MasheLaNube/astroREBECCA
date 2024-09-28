@@ -3,7 +3,8 @@ Just a simple module to download and proccess TESS data as easy as possible
 
 
 This was made in one afternoon lol
-Created by: Mashe
+
+Created by: Marcela López and NHernán Salinas
 
 
 ##  INSTALLATION AND REQUIREMENTS  ##
