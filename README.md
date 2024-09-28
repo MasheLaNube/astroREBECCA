@@ -4,7 +4,7 @@ Just a simple module to download and proccess TESS data as easy as possible
 
 This was made in one afternoon lol
 
-Created by: Marcela López and NHernán Salinas
+Created by: Marcela López and Hernán Salinas
 
 
 ##  INSTALLATION AND REQUIREMENTS  ##
