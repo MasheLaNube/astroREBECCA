@@ -2,14 +2,19 @@
 Just a simple module to download and proccess TESS data as easy as possible
 
 
-This was made in one afternoon lol
+This was made in one day lol
 
 Created by: Marcela López and Hernán Salinas
 
 
 ##  INSTALLATION AND REQUIREMENTS  ##
 
-Just download it to your computer or clone it!
+Just download it to your computer or clone it in the same folder you are working!
+
+To use it just write inside your code: import tesslc as lc
+
+
+
 
 Packages needed:
 	numpy		1.22.4
