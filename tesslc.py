@@ -84,10 +84,7 @@ def save_data(sec, T0, P, PATH, binned, name= ''):
 	sec.to_csv(PATH +'/Data_' + name + '_NoPF.csv', overwrite=True)
 	print('Data_' + name + '_NoPF.csv SAVED in ', PATH, ' folder.')
     
-    
-import numpy as np
-import matplotlib.pyplot as plt
-from astropy.io import ascii
+
 
 def loading_data(PATH, binned, name, transitos, T0=None, P=None):
     """
