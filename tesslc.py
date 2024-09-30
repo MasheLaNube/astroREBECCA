@@ -31,7 +31,7 @@ def transit_identif(sec, T0, P, transits):
 	inicio= sec.time.min().value
 	fin= sec.time.max().value
 	mean_flux= sec.flux.mean().value
-	time_values= sec.time.jd #######################FIX
+	time_values= sec.time.jd 
 	flux_values= sec.flux.value
 
 	print(f"Range of time: {inicio} - {fin}\n")
@@ -43,7 +43,7 @@ def transit_identif(sec, T0, P, transits):
 
 	print(f"T0 adjustes to range: {T0_ajustado}\n")
 
-	# Calculamos los tránsitos
+	#Calculamos los tránsitos
 	transitos= transits
 	n= 0
 	while True:
@@ -59,6 +59,9 @@ def transit_identif(sec, T0, P, transits):
 	
 	
 def fold_second_tr(sec, T0, P, PATH, binned, name=''):
+    """
+    Phase folding to see secondary transits
+    """
 	ax = sec.fold(period = P, epoch_time = T0+P/2).scatter()
 	sec.fold(period = P, epoch_time = T0+P/2).bin(time_bin_size=binned).scatter(ax=ax,marker = 'o', s = 2, ec='magenta', fc = "none", lw=1, alpha=1)
 	plt.title(name + ' Secondary Eclipse')
@@ -84,46 +87,42 @@ def save_data(sec, T0, P, PATH, binned, name= ''):
 	sec.to_csv(PATH +'/Data_' + name + '_NoPF.csv', overwrite=True)
 	print('Data_' + name + '_NoPF.csv SAVED in ', PATH, ' folder.')
     
+    
 
 
 def loading_data(PATH, binned, name, transitos, T0=None, P=None):
     """
     Load the data and apply phase folding or binning depending on the file type:
     - '_PF.csv': Data is already folded, only binning is applied.
-    - '_NoPF.csv': Data is not folded, folding and transit marking is applied.
+    - '_NoPF.csv': Data is not folded.
     """
-    # Cargar los datos
     datapd = ascii.read(PATH + '/' + name)
+    data_time= datapd['time']
+    data_flux= datapd['flux']
+    data_err_flux= datapd['flux_err']
 
-    # Obtener las columnas relevantes
-    data_time = datapd['time']
-    data_flux = datapd['flux']
-    data_err_flux = datapd['flux_err']
+    plt.rcParams['figure.figsize']= (8, 4)
+    plt.rcParams['figure.dpi']= 200
 
-    plt.rcParams['figure.figsize'] = (8, 4)
-    plt.rcParams['figure.dpi'] = 200
-
-    mean_flux = data_flux.mean()
-    ax0 = plt.subplot()
+    mean_flux= data_flux.mean()
+    ax0= plt.subplot()
 
     if name.endswith('_PF.csv'):
         # Caso en el que los datos ya están en phase folding
-        plt.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1)
-
-        # Bin the data manually
-        bins = np.arange(data_time.min(), data_time.max(), binned)
-        binned_flux, bin_edges = np.histogram(data_time, bins=bins, weights=data_flux)
+        plt.plot(data_time, data_flux, '.k', markersize=0.5, zorder= 1)
+        bins= np.arange(data_time.min(), data_time.max(), binned)
+        binned_flux, bin_edges= np.histogram(data_time, bins=bins, weights=data_flux)
         bin_counts, _ = np.histogram(data_time, bins=bins)
-        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
-        binned_flux = np.divide(binned_flux, bin_counts, where=bin_counts != 0)  # Evitar división por 0
+        bin_centers= (bin_edges[:-1] + bin_edges[1:]) / 2
+        binned_flux= np.divide(binned_flux, bin_counts, where=bin_counts != 0)
 
-        # Plot the binned data
+        #Plot the binned data
         ax0.scatter(bin_centers, binned_flux, color='orange', s=10, lw=0.01, zorder=2)
         plt.xlabel('Phase (Days)')
         plt.ylabel('Relative flux')
 
     elif name.endswith('_NoPF.csv'):
-        # Caso en el que los datos son puros (no phase folding), aplicamos el gráfico sin folding
+        #Caso en el que los datos son puros (no phase folding), aplicamos el gráfico sin folding
         for i in transitos:
             ax0.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1)
             plt.plot(i, mean_flux, marker='x', color='r', markersize=1, zorder=2)
@@ -144,21 +143,19 @@ def select_transit(PATH, bins, name, transitos):
     datapd= ascii.read(PATH + '/' + name)
     i= 1  
 
-    # Seleccionar el rango de datos
+    #Seleccionar el rango de datos
     for transit in transitos:
         start_time= transit - 1
         end_time= transit + 1
 
-        # Filtrar los datos dentro del rango
+        #Filtrar los datos dentro del rango
         filtered_data= datapd[(datapd['time'] >= start_time) & (datapd['time'] <= end_time)]
-        # Extraer las columnas de interés
         time_data= filtered_data['time']
         flux_data= filtered_data['flux']
 
         num_bins= int((time_data.max() - time_data.min()) / bins)
-        # Realizar el binning con numpy
-        bin_edges= np.linspace(time_data.min(), time_data.max(), num_bins + 1)  # Bordes de los bins
-        bin_indices= np.digitize(time_data, bin_edges)  # Clasificar cada valor de tiempo en un bin
+        bin_edges= np.linspace(time_data.min(), time_data.max(), num_bins + 1)  #Bordes de los bins
+        bin_indices= np.digitize(time_data, bin_edges)  #Clasificar cada valor de tiempo en un bin
         bin_means_time= [time_data[bin_indices == i].mean() for i in range(1, num_bins + 1)]
         bin_means_flux= [flux_data[bin_indices == i].mean() for i in range(1, num_bins + 1)]
 
@@ -173,23 +170,23 @@ def select_transit(PATH, bins, name, transitos):
         plt.legend()
         plt.show()
 
-        # Mantener un ciclo para asegurar que el input sea válido
+        #Mantener un ciclo para asegurar que el input sea válido
         while True:
-            tr = input('Do you wanna save this transit? (y/n): ')
+            tr= input('Do you wanna save this transit? (y/n): ')
             if tr.lower() in ['y', 'yes']:
-                # Guardar el tránsito con un nombre único basado en el contador 'i'
-                df_to_save = pd.DataFrame({
+                #Guardar el tránsito con un nombre único basado en el contador 'i'
+                df_to_save= pd.DataFrame({
                     'time': time_data,
                     'flux': flux_data
                 })
                 df_to_save.to_csv(f"{PATH}/Transit_{name}_transit_{i}.csv", index=False)
                 print(f'Transit {i} saved as Transit_{name}_transit_{i}.csv.')
-                i += 1  # Incrementar el contador solo si se guarda o se omite correctamente
-                break  # Salir del ciclo de input válido
+                i += 1
+                break
             elif tr.lower() in ['n', 'no']:
                 print('Plot skipped.')
-                i += 1  # Incrementar el contador solo si se guarda o se omite correctamente
-                break  # Salir del ciclo de input válido
+                i += 1  
+                break  
             else:
                 print('Not a valid input. Please try again.')
 
