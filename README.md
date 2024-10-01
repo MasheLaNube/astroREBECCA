@@ -2,8 +2,6 @@
 Just a simple module to download and proccess TESS data as easy as possible
 
 
-This was made in one day lol
-
 Created by: Marcela López and Hernán Salinas
 
 
