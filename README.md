@@ -1,5 +1,7 @@
-# TESS_Obtaining_Lightcurves
-Just a simple module to download and proccess TESS data as easy as possible
+## REBECCA
+# Remoción de outliers, Extracción de tránsitos, Base de datos guardados, Enlazado de datos, Carga y separación de datos, Cálculo de fase y Ajuste de períodos.
+Just a simple module to download and proccess TESS data as easy as possible.
+Created for the MOTE proyect
 
 
 Created by: Marcela López and Hernán Salinas
@@ -9,7 +11,7 @@ Created by: Marcela López and Hernán Salinas
 
 Just download it to your computer or clone it in the same folder you are working!
 
-To use it just write inside your code: import tesslc as lc
+To use it just write inside your code: import rebecca as rb
 
 
 
