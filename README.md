@@ -1,5 +1,5 @@
-## REBECCA
-# Remoción de outliers, Extracción de tránsitos, Base de datos guardados, Enlazado de datos, Carga y separación de datos, Cálculo de fase y Ajuste de períodos.
+# REBECCA
+## Real-time Evaluation and Binning for Exoplanet, Curve Cleaning and Analysis
 Just a simple module to download and proccess TESS data as easy as possible.
 Created for the MOTE proyect
 
