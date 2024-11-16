@@ -109,21 +109,21 @@ def loading_data(PATH, binned, name, transitos):
     ax0 = plt.subplot()
 
     if name.endswith('_PF.csv'):
-        plt.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1)
+        plt.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1, label= 'Data')
         num_bins = binned
         bin_edges = np.linspace(data_time.min(), data_time.max(), num_bins + 1)
         bin_medians, _, _ = binned_statistic(data_time, data_flux, statistic='median', bins=bin_edges)
         bin_stds, _, _ = binned_statistic(data_time, data_flux, statistic='std', bins=bin_edges)
         bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
         valid_bins = ~np.isnan(bin_medians)
-        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2)
+        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, label= 'Binning')
         plt.ylabel('Relative flux')
 
     elif name.endswith('_NoPF.csv'):
         a=0
         for i in transitos:
             a+=1
-            plt.plot(i, mean_flux, marker='x', color='r', markersize=3, zorder=3, label=f'transit midpoint {a}')
+            plt.plot(i, mean_flux, marker='x', color='r', markersize=3, zorder=3, label=f'Transit midpoint {a}')
         ax0.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1, label='Data')
         num_bins = binned
         bin_edges = np.linspace(data_time.min(), data_time.max(), num_bins + 1)
@@ -131,7 +131,7 @@ def loading_data(PATH, binned, name, transitos):
         bin_stds, _, _ = binned_statistic(data_time, data_flux, statistic='std', bins=bin_edges)
         bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
         valid_bins = ~np.isnan(bin_medians)
-        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, label='binning')
+        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, label='Binning')
         ax0.set_xlabel("Time - 2457000 [BJTD days]")
         ax0.set_ylabel("Flux")
         
