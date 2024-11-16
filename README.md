@@ -4,7 +4,7 @@ Just a simple module to download and proccess TESS data as easy as possible.
 Created for the MOTE proyect
 
 
-Created by: Marcela López and Hernán Salinas
+Created by: Marcela López
 
 
 ##  INSTALLATION AND REQUIREMENTS  ##
