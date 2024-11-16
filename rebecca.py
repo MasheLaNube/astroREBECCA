@@ -67,7 +67,7 @@ def save_data(sec, T0, P, PATH, binned, name= ''):
 	
 	ax= sec.fold(period = P, epoch_time = T0, normalize_phase=False).scatter()
 	a= sec.fold(period = P, epoch_time = T0)
-	fase= sec.fold(period = P, epoch_time = T0).bin(time_bin_size=binned).scatter(ax=ax,color='orange',lw=1)
+	fase= sec.fold(period = P, epoch_time = T0).bin(time_bin_size=binned).scatter(ax=ax,color='orange',lw=1, zorder=2)
 	
 	
 	plt.savefig(PATH + "/" + name)
@@ -117,24 +117,35 @@ def loading_data(PATH, binned, name, transitos):
         bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
         valid_bins = ~np.isnan(bin_medians)
         ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2)
-        plt.xlabel('Phase (Days)')
         plt.ylabel('Relative flux')
 
     elif name.endswith('_NoPF.csv'):
+        a=0
         for i in transitos:
-            ax0.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1)
-            plt.plot(i, mean_flux, marker='x', color='r', markersize=1, zorder=2)
+            a+=1
+            plt.plot(i, mean_flux, marker='x', color='r', markersize=3, zorder=3, label=f'transit midpoint {a}')
+        ax0.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1, label='Data')
+        num_bins = binned
+        bin_edges = np.linspace(data_time.min(), data_time.max(), num_bins + 1)
+        bin_medians, _, _ = binned_statistic(data_time, data_flux, statistic='median', bins=bin_edges)
+        bin_stds, _, _ = binned_statistic(data_time, data_flux, statistic='std', bins=bin_edges)
+        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+        valid_bins = ~np.isnan(bin_medians)
+        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, label='binning')
         ax0.set_xlabel("Time - 2457000 [BJTD days]")
         ax0.set_ylabel("Flux")
-
+        
+    plt.legend(prop={'size': 8}, loc='upper left', bbox_to_anchor=(1, 1))
     plt.show()
 
     # Return the desired values
     return data_time, data_flux, data_err_flux, datapd
 
 
-	
-		
+
+'''
+					In development
+'''
 
 
 def select_transit(PATH, bins, name, transitos):
@@ -159,10 +170,11 @@ def select_transit(PATH, bins, name, transitos):
 
         # Filter data within the specified time range
         filtered_data = datapd[(datapd['time'] >= start_time) & (datapd['time'] <= end_time)]
+
         time_data = filtered_data['time']
         flux_data = filtered_data['flux']
-        flux_err_data = filtered_data['flux_err'] if 'flux_err' in filtered_data.columns else np.zeros(len(filtered_data))
-
+        flux_err_data = filtered_data['flux_err']
+        
         # Bin the data
         num_bins = int((time_data.max() - time_data.min()) / bins)
         bin_edges = np.linspace(time_data.min(), time_data.max(), num_bins + 1)
@@ -183,20 +195,17 @@ def select_transit(PATH, bins, name, transitos):
         plt.show()
 
         # Collect the light curve data into an array and store it in the list
-        lc_array = np.array([time_data.values, flux_data.values, flux_err_data.values]).T
+        lc_array = np.array([time_data, flux_data, flux_err_data]).T
         lc_list.append(lc_array)
 
         # Prompt user for saving the transit
         while True:
             tr = input('Do you wanna save this transit? (y/n): ')
             if tr.lower() in ['y', 'yes']:
-                # Save the transit data with a unique name
-                df_to_save = pd.DataFrame({
-                    'time': time_data,
-                    'flux': flux_data,
-                    'flux_err': flux_err_data
-                })
-                df_to_save.to_csv(f"{PATH}/Transit_{name}_transit_{i}.csv", index=False)
+                # Save the transit data using numpy
+                save_array = np.array([time_data, flux_data, flux_err_data]).T  # Transpose to get columns
+                header = 'time,flux,flux_err'  # Header for the CSV file
+                np.savetxt(f"{PATH}/Transit_{name}_transit_{i}.csv", save_array, delimiter=',', header=header, comments='', fmt='%f')
                 print(f'Transit {i} saved as Transit_{name}_transit_{i}.csv.')
                 i += 1
                 break
