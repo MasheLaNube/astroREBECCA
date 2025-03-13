@@ -116,7 +116,7 @@ def loading_data(PATH, binned, name, transitos):
         bin_stds, _, _ = binned_statistic(data_time, data_flux, statistic='std', bins=bin_edges)
         bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
         valid_bins = ~np.isnan(bin_medians)
-        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, label= 'Binning')
+        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, lw=1, label= 'Binning')
         plt.ylabel('Relative flux')
 
     elif name.endswith('_NoPF.csv'):
@@ -131,7 +131,7 @@ def loading_data(PATH, binned, name, transitos):
         bin_stds, _, _ = binned_statistic(data_time, data_flux, statistic='std', bins=bin_edges)
         bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
         valid_bins = ~np.isnan(bin_medians)
-        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, label='Binning')
+        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, lw=1, label='Binning')
         ax0.set_xlabel("Time - 2457000 [BJTD days]")
         ax0.set_ylabel("Flux")
         
