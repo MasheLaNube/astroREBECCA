@@ -22,6 +22,7 @@ Packages needed:
 	matplotlib	3.5.1
 	astropy		6.0.1
 	lightkurve 	2.5.0
+ 	plotly		5.22.0
 	
 	
 Remember that you can upgrade your packages by just using pip as, for example:
