@@ -75,7 +75,7 @@ def save_data(sec, T0, P, PATH, binned, name= ''):
 	print('Saving data NORMALIZED...\n\n\n')
 	a.to_csv(PATH +'/Data_' + name + '_PF.csv', overwrite=True)
 	print('Data_' + name + '_PF.csv SAVED in ', PATH, ' folder.')
-	sec.normalize().to_csv(PATH +'/Data_' + name + '_NoPF.csv', overwrite=True)
+	sec.normalize().flatten().to_csv(PATH +'/Data_' + name + '_NoPF.csv', overwrite=True)
 	print('Data_' + name + '_NoPF.csv SAVED in ', PATH, ' folder.')
     
     
