@@ -96,13 +96,13 @@ def save_data(sec, T0, P, PATH, binned, name= ''):
     print('Saving data NORMALIZED...\n\n\n')
     a.to_csv(PATH +'/Data_' + name + '_PF.csv', overwrite=True)
     print('Data_' + name + '_PF.csv SAVED in ', PATH, ' folder.')
-    sec.to_csv(PATH +'/Data_' + name + '_NoPF.csv', overwrite=True)
+    b.to_csv(PATH +'/Data_' + name + '_NoPF.csv', overwrite=True)
     print('Data_' + name + '_NoPF.csv SAVED in ', PATH, ' folder.')
     
     
 
 
-def loading_data(PATH, binned, name, transitos):
+def loading_data(PATH, name):
     """
     Load the data and apply phase folding or binning depending on the file type:
     - '_PF.csv': Data is already folded, only binning is applied.
