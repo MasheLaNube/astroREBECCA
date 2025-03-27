@@ -123,42 +123,42 @@ def loading_data(PATH, name):
     data_err_flux= data['flux_err']  # Use .get() to avoid key errors if column is missing
 
     # Plotting logic (for visualization)
-    plt.rcParams['figure.figsize'] = (8, 4)
-    plt.rcParams['figure.dpi'] = 200
-    ax0= plt.subplot()
+    #plt.rcParams['figure.figsize'] = (8, 4)
+    #plt.rcParams['figure.dpi'] = 200
+    #ax0= plt.subplot()
 
-    if name.endswith('_PF.csv'):
-        plt.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1, label= 'Data')
-        num_bins = binned
-        bin_edges = np.linspace(data_time.min(), data_time.max(), num_bins + 1)
-        bin_medians, _, _ = binned_statistic(data_time, data_flux, statistic='median', bins=bin_edges)
-        bin_counts, _, _ = binned_statistic(data_time, data_flux, statistic='count', bins=bin_edges)
-        valid_bins = bin_counts > 0
-        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+#    if name.endswith('_PF.csv'):
+#        plt.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1, label= 'Data')
+#        num_bins = binned
+#        bin_edges = np.linspace(data_time.min(), data_time.max(), num_bins + 1)
+#        bin_medians, _, _ = binned_statistic(data_time, data_flux, statistic='median', bins=bin_edges)
+#        bin_counts, _, _ = binned_statistic(data_time, data_flux, statistic='count', bins=bin_edges)
+#        valid_bins = bin_counts > 0
+#        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
 #        valid_bins = ~np.isnan(bin_medians)
-        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, s=1, label= 'Binning')
-        ax0.set_xlabel("Phase [JD]")
-        ax0.set_ylabel("Normalized Flux")
+#        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, s=1, label= 'Binning')
+#        ax0.set_xlabel("Phase [JD]")
+ #       ax0.set_ylabel("Normalized Flux")
 
-    elif name.endswith('_NoPF.csv'):
-        a=0
-        for i in transitos:
-            a+=1
-            plt.plot(i, data_flux.mean(), marker='x', color='r', markersize=3, zorder=3, label=f'Transit midpoint {a}')
-        ax0.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1, label='Data')
-        num_bins = binned
-        bin_edges = np.linspace(data_time.min(), data_time.max(), num_bins + 1)
-        bin_medians, _, _ = binned_statistic(data_time, data_flux, statistic='median', bins=bin_edges)
-        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
-        bin_counts, _, _ = binned_statistic(data_time, data_flux, statistic='count', bins=bin_edges)
-        valid_bins = (bin_counts > 0) & ~np.isnan(bin_medians)
+#    elif name.endswith('_NoPF.csv'):
+#        a=0
+#        for i in transitos:
+#            a+=1
+#            plt.plot(i, data_flux.mean(), marker='x', color='r', markersize=3, zorder=3, label=f'Transit midpoint {a}')
+#        ax0.plot(data_time, data_flux, '.k', markersize=0.5, zorder=1, label='Data')
+#        num_bins = binned
+#        bin_edges = np.linspace(data_time.min(), data_time.max(), num_bins + 1)
+#        bin_medians, _, _ = binned_statistic(data_time, data_flux, statistic='median', bins=bin_edges)
+#        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
+#        bin_counts, _, _ = binned_statistic(data_time, data_flux, statistic='count', bins=bin_edges)
+#        valid_bins = (bin_counts > 0) & ~np.isnan(bin_medians)
 #        valid_bins = ~np.isnan(bin_medians)
-        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, s=1, label='Binning')
-        ax0.set_xlabel("Time - 2457000 [JD days]")
-        ax0.set_ylabel("Normalized Flux")
+#        ax0.scatter(bin_centers[valid_bins], bin_medians[valid_bins], color='orange', zorder=2, s=1, label='Binning')
+#        ax0.set_xlabel("Time - 2457000 [JD days]")
+#        ax0.set_ylabel("Normalized Flux")
         
-    plt.legend(prop={'size': 8}, loc='upper left', bbox_to_anchor=(1, 1))
-    plt.show()
+#    plt.legend(prop={'size': 8}, loc='upper left', bbox_to_anchor=(1, 1))
+#    plt.show()
 
     # Return the desired values
     return data_time, data_flux, data_err_flux
