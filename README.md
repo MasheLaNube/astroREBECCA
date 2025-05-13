@@ -1,8 +1,10 @@
-# REBECCA
+# REBECCA (Disclaimer: Work in Progress)
 ## Real-time Evaluation and Binning for Exoplanet, Curve Cleaning and Analysis
-Just a simple module to download and proccess TESS data as easy as possible.
-Created for the MOTE proyect
 
+REBECCA is an early-stage tool under active development.
+Features, structure, and functionality may change frequently as the project evolves.
+You're welcome to explore and use the code, but please note that it is not yet stable.
+Contributions, feedback, and suggestions are always welcome!
 
 Created by: Marcela López
 
@@ -24,6 +26,8 @@ Packages needed:
 	lightkurve 	2.5.0
  	plotly		5.22.0
   	ipywidgets	24.2
+
+In a sea of data, let us build a lighthouse for discovery.
 	
 	
 Remember that you can upgrade your packages by just using pip as, for example:
