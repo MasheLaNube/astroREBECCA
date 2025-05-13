@@ -26,9 +26,9 @@ Packages needed:
 	lightkurve 	2.5.0
  	plotly		5.22.0
   	ipywidgets	24.2
-
-In a sea of data, let us build a lighthouse for discovery.
 	
 	
 Remember that you can upgrade your packages by just using pip as, for example:
 % pip install numpy --upgrade
+
+"In a sea of data, let us build a lighthouse for discovery."
